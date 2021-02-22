@@ -1,63 +1,50 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">netflix-clone-public</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div class="App">
+    <Nav />
+    <Banner />
+    <Row
+      :title="'NETFLIX ORIGINALS'"
+      :fetchUrl="requests.feachNetflixOriginals"
+      :isLargeRow="true"
+    />
+    <Row title="Trending Now" :fetchUrl="requests.feachTrending" />
+    <Row title="Top Rated" :fetchUrl="requests.feactTopRated" />
+    <Row title="Action Movies" :fetchUrl="requests.feactActionMovies" />
+    <Row title="Comedy Movies" :fetchUrl="requests.feactComedyMovies" />
+    <Row title="Horror Movies" :fetchUrl="requests.feactHorrorMovies" />
+    <Row title="Romance Movies" :fetchUrl="requests.feactRomanceMovies" />
+    <Row title="Documentaries" :fetchUrl="requests.feactDocumentMovies" />
   </div>
 </template>
 
-<script>
-export default {}
+<script lang="ts">
+import { defineComponent, reactive } from '@nuxtjs/composition-api'
+import Row from '@/components/Row.vue'
+import Banner from '@/components/Banner.vue'
+import Nav from '@/components/Nav.vue'
+import { requests } from '@/composables/useTmdb'
+
+export default defineComponent({
+  head: {},
+  props: {},
+  components: {
+    Row,
+    Banner,
+    Nav,
+  },
+  setup() {
+    const state = reactive({
+      cards: ['1', '2'],
+      isLoading: true,
+    })
+
+    return { state, requests }
+  },
+})
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+<style lang="scss" scoped>
+.App {
+  background-color: #111;
 }
 </style>
